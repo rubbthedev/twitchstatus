@@ -1,0 +1,63 @@
+
+
+
+
+var names = ["johnnycderp", "onkelbarlow", "sodapoppin", "payo"];
+var streamsURL = "https://api.twitch.tv/kraken/streams/";
+var clientID = "3df77f021ah5v7gv02jkvstdbqycxj";
+var appendText;
+
+
+
+for(let x = 0; x < names.length; x++){
+
+$.getJSON(streamsURL + names[x] + "?client_id=" + clientID, function(channel) {
+
+
+    if (channel["stream"] == null) { 
+        $(".online").hide();
+        $(".offline").show();
+        console.log("offline!");
+
+    } else {
+        console.log("online!");
+
+        var stream_name = channel.stream.channel.display_name;
+        var stream_title = channel.stream.channel.status;
+        var stream_type = channel.stream.stream_type;
+        var stream_url = channel.stream.channel.url;
+        var stream_game = channel.stream.game;
+        var stream_avatar_url = channel.stream.channel.logo;
+        var stream_viewers = channel.stream.viewers;
+        var stream_followers = channel.stream.channel.followers;
+
+        $('.twitch-streams').append("<div class=twitch-streams-inner id=" + stream_name + ">" +
+									"<a id=streamurl href=" + stream_url + ">" +
+										"<div class=streamleft-inner>" +
+											"<img id=streamavatar src=" + stream_avatar_url + ">" +
+										"</div>" +
+										"<div class=streamright-inner>" +
+											"<div id=streamname>" + stream_name + "</div>" +
+											"<div id=streamgame>" + " spielt gerade " + "<span class=activegame>" + stream_game + "</span>" + "</div>" +
+											"<div id=streamtype>" + stream_type + "</div>" +
+											"<div id=streamtitle>" + stream_title + "</div>" +
+												"<div class=streammeta-half>" +
+													"<div class=streamviewers>" +
+														"<span id=streamviewers-inner>" + stream_viewers + "</span> Zuschauer" +
+													"</div>" +
+													"<div class=streamfollowers>" +
+														"<span id=streamfollowers-inner>" + stream_followers + "</span> Folgen" +
+													"</div>" +
+												"</div>" +
+										"</div>" +
+									"</a>" +
+									"</div>");
+
+    }
+});
+
+};
+
+
+		//Alle Infos
+        //console.log(channel);
